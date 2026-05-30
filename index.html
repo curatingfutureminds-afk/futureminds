@@ -204,9 +204,8 @@
     padding: 2rem;
     position: relative;
     overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s, max-height 0.3s ease-out;
+    transition: transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
-    max-height: 400px;
   }
 
   .event-card::before {
@@ -219,10 +218,6 @@
 
   .event-card.in-person::before { background: #f5a623; }
   .event-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(10, 31, 68, 0.15); }
-
-  .event-card.expanded {
-    max-height: 1000px;
-  }
 
   .event-date {
     font-family: "Bebas Neue", sans-serif;
@@ -268,27 +263,106 @@
     border: 1px solid #b0c8e8;
   }
 
-  .event-expanded-content {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #e0e0e0;
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    line-height: 1.7;
+  /* Modal for expanded event */
+  .event-modal {
     display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 31, 68, 0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
   }
 
-  .event-card.expanded .event-expanded-content {
-    display: block;
+  .event-modal.active {
+    display: flex;
+  }
+
+  .event-modal-content {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 2.5rem;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(10, 31, 68, 0.3);
+  }
+
+  .event-modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: var(--navy);
+    color: var(--light-blue);
+    border: none;
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .event-modal-close:hover {
+    background: var(--light-blue);
+    color: var(--navy);
+  }
+
+  .event-modal-header {
+    margin-bottom: 1.5rem;
+    padding-right: 3rem;
+  }
+
+  .event-modal-date {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    color: var(--mid-blue);
+    margin-bottom: 0.5rem;
+  }
+
+  .event-modal-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+    margin-bottom: 1rem;
+  }
+
+  .event-modal-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .event-modal-meta {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .event-modal-meta .event-platform,
+  .event-modal-meta .event-price {
+    display: inline-block;
   }
 
   .event-expanded-placeholder {
     background: #f5f5f5;
-    padding: 1.5rem;
+    padding: 2rem;
     border-radius: 4px;
     text-align: center;
     color: #999;
     font-style: italic;
+    margin-top: 2rem;
   }
 
   .coming-soon-card {
@@ -528,6 +602,16 @@
 
     .logo-img { height: 40px; }
     .logo-text { font-size: 1.4rem; }
+
+    .event-modal-content {
+      width: 95%;
+      padding: 1.5rem;
+    }
+
+    .event-modal-close {
+      top: 1rem;
+      right: 1rem;
+    }
   }
 </style>
 </head>
@@ -536,29 +620,50 @@
 <header>
   <a class="logo" onclick="switchTabByName('events')">
     <svg class="logo-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
-      <rect width="400" height="400" fill="#0A1F44" rx="200"/>
-      <g stroke="#5BC4F5" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M80 200 A120 120 0 0 1 320 200"/>
-        <path d="M100 200 A100 100 0 0 1 300 200"/>
+      <!-- Outer circle -->
+      <circle cx="200" cy="200" r="190" fill="none" stroke="#5BC4F5" stroke-width="12"/>
+      
+      <!-- Brain side (left) -->
+      <path d="M 140 160 Q 120 150 115 170 Q 110 190 120 210 Q 125 220 140 215 Q 145 210 148 195" fill="none" stroke="#5BC4F5" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="125" cy="155" r="4" fill="#5BC4F5"/>
+      <circle cx="125" cy="175" r="4" fill="#5BC4F5"/>
+      <circle cx="125" cy="195" r="4" fill="#5BC4F5"/>
+      <circle cx="135" cy="165" r="3" fill="#5BC4F5"/>
+      <circle cx="135" cy="185" r="3" fill="#5BC4F5"/>
+      <circle cx="135" cy="205" r="3" fill="#5BC4F5"/>
+      
+      <!-- Brain wrinkles -->
+      <path d="M 145 160 Q 150 155 155 160" fill="none" stroke="#5BC4F5" stroke-width="6" stroke-linecap="round"/>
+      <path d="M 145 180 Q 150 175 155 180" fill="none" stroke="#5BC4F5" stroke-width="6" stroke-linecap="round"/>
+      <path d="M 145 200 Q 150 195 155 200" fill="none" stroke="#5BC4F5" stroke-width="6" stroke-linecap="round"/>
+      
+      <!-- Circuit lines from brain -->
+      <line x1="155" y1="165" x2="170" y2="160" stroke="#5BC4F5" stroke-width="6" stroke-linecap="round"/>
+      <line x1="155" y1="180" x2="170" y2="180" stroke="#5BC4F5" stroke-width="6" stroke-linecap="round"/>
+      <line x1="155" y1="200" x2="170" y2="210" stroke="#5BC4F5" stroke-width="6" stroke-linecap="round"/>
+      
+      <!-- Gear side (right) -->
+      <g transform="translate(240, 190)">
+        <!-- Outer gear ring -->
+        <circle cx="0" cy="0" r="35" fill="none" stroke="#5BC4F5" stroke-width="8"/>
+        <!-- Gear teeth -->
+        <rect x="-8" y="-50" width="16" height="20" fill="#5BC4F5" rx="2"/>
+        <rect x="35" y="-8" width="20" height="16" fill="#5BC4F5" rx="2"/>
+        <rect x="-8" y="30" width="16" height="20" fill="#5BC4F5" rx="2"/>
+        <rect x="-55" y="-8" width="20" height="16" fill="#5BC4F5" rx="2"/>
+        <!-- Center hole -->
+        <circle cx="0" cy="0" r="12" fill="none" stroke="#5BC4F5" stroke-width="6"/>
       </g>
-      <g stroke="#5BC4F5" stroke-width="6" fill="none">
-        <circle cx="130" cy="130" r="3"/>
-        <circle cx="130" cy="160" r="3"/>
-        <circle cx="130" cy="190" r="3"/>
-        <circle cx="130" cy="220" r="3"/>
-        <circle cx="130" cy="250" r="3"/>
-        <path d="M140 130 Q160 140 170 150"/>
-        <path d="M140 160 Q160 165 175 170"/>
-        <path d="M140 190 Q160 190 175 190"/>
-        <path d="M140 220 Q160 215 175 210"/>
-        <path d="M140 250 Q160 240 170 230"/>
-        <path d="M190 120 L210 120 L220 140 L210 160 L190 160 L180 140 Z"/>
-        <circle cx="200" cy="140" r="6" stroke="#5BC4F5" stroke-width="2"/>
-      </g>
-      <text x="200" y="330" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
-        <tspan fill="#FFFFFF">FUTURE</tspan><tspan fill="#5BC4F5">MINDS</tspan>
-      </text>
-      <text x="200" y="360" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#5BC4F5" text-anchor="middle">VEX IQ - STEM</text>
+      
+      <!-- Bottom arc left -->
+      <path d="M 120 320 Q 150 340 180 340" fill="none" stroke="#5BC4F5" stroke-width="10" stroke-linecap="round"/>
+      
+      <!-- Bottom arc right -->
+      <path d="M 220 340 Q 250 340 280 320" fill="none" stroke="#5BC4F5" stroke-width="10" stroke-linecap="round"/>
+      
+      <!-- Top arc indicators -->
+      <circle cx="90" cy="100" r="8" fill="none" stroke="#5BC4F5" stroke-width="6"/>
+      <circle cx="310" cy="100" r="8" fill="none" stroke="#5BC4F5" stroke-width="6"/>
     </svg>
     <span class="logo-text"><span class="future">Future</span><span class="mind">Minds</span></span>
   </a>
@@ -601,7 +706,7 @@
       <h3>💻 Online Sessions</h3>
     </div>
     <div class="events-grid">
-      <div class="event-card" onclick="toggleEventExpand(this)">
+      <div class="event-card" onclick="openEventModal(0)">
         <div class="event-date">June 5 · 3:00 – 4:00 PM</div>
         <div class="event-title">Introduction to the 25–26 VEX IQ Game: Level Up</div>
         <div class="event-desc">Learn about the new VEX IQ Challenge Level Up! Look through the Game Manual, create basic strategies, and get a better understanding of Level Up with this online class!</div>
@@ -610,12 +715,9 @@
           <span>Rising Grades 3–8</span>
           <span class="event-price">$5</span>
         </div>
-        <div class="event-expanded-content">
-          <div class="event-expanded-placeholder">📚 More info coming soon</div>
-        </div>
       </div>
 
-      <div class="event-card" onclick="toggleEventExpand(this)">
+      <div class="event-card" onclick="openEventModal(1)">
         <div class="event-date">June 7 · 11:00 AM – 12:30 PM</div>
         <div class="event-title">Coding, Engineering & Notebooking</div>
         <div class="event-desc">How to navigate aspects of the Engineering Notebook, Coding, and the Engineering Design Process (EDP) for the new VEX IQ Challenge Level Up!</div>
@@ -624,12 +726,9 @@
           <span>Rising Grades 3–8</span>
           <span class="event-price">$6</span>
         </div>
-        <div class="event-expanded-content">
-          <div class="event-expanded-placeholder">📚 More info coming soon</div>
-        </div>
       </div>
 
-      <div class="event-card" onclick="toggleEventExpand(this)">
+      <div class="event-card" onclick="openEventModal(2)">
         <div class="event-date">June 8 · 2:00 – 3:00 PM</div>
         <div class="event-title">Leadership Workshop</div>
         <div class="event-desc">Being a leader may seem intimidating but we can lessen that load! Learn about the different qualities of a leader and how they apply to VEX IQ.</div>
@@ -637,9 +736,6 @@
           <span class="event-platform">💻 Zoom</span>
           <span>Rising Grades 5–8</span>
           <span class="event-price">$5</span>
-        </div>
-        <div class="event-expanded-content">
-          <div class="event-expanded-placeholder">📚 More info coming soon</div>
         </div>
       </div>
     </div>
@@ -662,6 +758,20 @@
 
     <div class="more-coming">
       <p>🚀 <strong>More workshops are on the way!</strong> Follow us and check back as we finalize our full summer schedule.</p>
+    </div>
+  </div>
+
+  <!-- Event Modal -->
+  <div class="event-modal" id="eventModal">
+    <div class="event-modal-content">
+      <button class="event-modal-close" onclick="closeEventModal()">✕</button>
+      <div class="event-modal-header">
+        <div class="event-modal-date" id="modalDate"></div>
+        <div class="event-modal-title" id="modalTitle"></div>
+        <div class="event-modal-desc" id="modalDesc"></div>
+        <div class="event-modal-meta" id="modalMeta"></div>
+      </div>
+      <div class="event-expanded-placeholder">📚 More info coming soon</div>
     </div>
   </div>
 
@@ -751,7 +861,7 @@
     <div class="signup-section">
       <div class="signup-left">
         <h2>Register Today</h2>
-        <p>Spots fill up fast — secure your seat in the workshop of your choice. All online sessions open to Grades 3–8.</p>
+        <p>Online sessions are open to rising grades 3 - 8, but some are only available for 5 - 8. More in-person sessions coming soon!</p>
         <div class="pricing-box">
           <h4>Per Workshop</h4>
           <div class="price">$5–$6</div>
@@ -759,7 +869,7 @@
         </div>
         <ul class="what-included">
           <li><span class="check">✓</span> Online — join from anywhere</li>
-          <li><span class="check">✓</span> Taught by experienced VEX IQ competitors</li>
+          <li><span class="check">✓</span> Led by World Champion Qualifiers of Georgia</li>
           <li><span class="check">✓</span> Focused on the new Level Up challenge</li>
           <li><span class="check">✓</span> Learn coding, engineering & notebooking</li>
           <li><span class="check">✓</span> Leadership skills workshop included</li>
@@ -788,6 +898,58 @@
 </footer>
 
 <script>
+  const eventData = [
+    {
+      date: "June 5 · 3:00 – 4:00 PM",
+      title: "Introduction to the 25–26 VEX IQ Game: Level Up",
+      desc: "Learn about the new VEX IQ Challenge Level Up! Look through the Game Manual, create basic strategies, and get a better understanding of Level Up with this online class!",
+      platform: "💻 Zoom",
+      grades: "Rising Grades 3–8",
+      price: "$5"
+    },
+    {
+      date: "June 7 · 11:00 AM – 12:30 PM",
+      title: "Coding, Engineering & Notebooking",
+      desc: "How to navigate aspects of the Engineering Notebook, Coding, and the Engineering Design Process (EDP) for the new VEX IQ Challenge Level Up!",
+      platform: "💻 Zoom",
+      grades: "Rising Grades 3–8",
+      price: "$6"
+    },
+    {
+      date: "June 8 · 2:00 – 3:00 PM",
+      title: "Leadership Workshop",
+      desc: "Being a leader may seem intimidating but we can lessen that load! Learn about the different qualities of a leader and how they apply to VEX IQ.",
+      platform: "💻 Zoom",
+      grades: "Rising Grades 5–8",
+      price: "$5"
+    }
+  ];
+
+  function openEventModal(index) {
+    const event = eventData[index];
+    document.getElementById("modalDate").textContent = event.date;
+    document.getElementById("modalTitle").textContent = event.title;
+    document.getElementById("modalDesc").textContent = event.desc;
+    
+    const metaHTML = `
+      <span class="event-platform">${event.platform}</span>
+      <span>${event.grades}</span>
+      <span class="event-price">${event.price}</span>
+    `;
+    document.getElementById("modalMeta").innerHTML = metaHTML;
+    document.getElementById("eventModal").classList.add("active");
+  }
+
+  function closeEventModal() {
+    document.getElementById("eventModal").classList.remove("active");
+  }
+
+  document.getElementById("eventModal").addEventListener("click", function(e) {
+    if (e.target === this) {
+      closeEventModal();
+    }
+  });
+
   function switchTab(name, btn) {
     document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
     document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
@@ -819,18 +981,6 @@
     switchTab(name, btn || null);
     const sel = document.querySelector(".mobile-menu");
     if (sel) sel.value = name;
-  }
-
-  function toggleEventExpand(card) {
-    const isExpanded = card.classList.contains("expanded");
-    
-    document.querySelectorAll(".event-card").forEach(c => {
-      c.classList.remove("expanded");
-    });
-
-    if (!isExpanded) {
-      card.classList.add("expanded");
-    }
   }
 
   function notifyHeight() {

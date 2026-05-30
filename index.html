@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FutureMinds Workshops</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: auto; overflow-x: hidden; margin: 0 !important; padding: 0 !important; }
+
+  :root {
+    --light-blue: #5BC4F5;
+    --navy: #0A1F44;
+    --mid-blue: #1565C0;
+    --white: #FFFFFF;
+    --gray: #F0F4FA;
+    --text-muted: #555;
+  }
+
+  body { font-family: "DM Sans", sans-serif; background: var(--navy); color: var(--white); }
+
+  header {
+    background: var(--navy);
+    border-bottom: 3px solid var(--light-blue);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo { display: flex; align-items: center; gap: 1rem; padding: 0.6rem 0; text-decoration: none; cursor: pointer; }
+  .logo-img { height: 50px; width: auto; }
+  .logo-text { font-family: "Bebas Neue", sans-serif; font-size: 1.8rem; letter-spacing: 3px; line-height: 1; }
+  .logo .future { color: var(--white); }
+  .logo .mind { color: var(--light-blue); }
+
+  nav { display: flex; }
+
+  .tab-btn {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: transparent;
+    border: none;
+    color: #7da8d4;
+    cursor: pointer;
+    padding: 1.4rem 1.1rem;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+    transition: all 0.2s;
+  }
+
+  .tab-btn:hover { color: var(--white); }
+  .tab-btn.active { color: var(--light-blue); border-bottom-color: var(--light-blue); }
+
+  .mobile-menu {
+    display: none;
+    background: var(--navy);
+    color: var(--light-blue);
+    border: 2px solid var(--light-blue);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .content { background: var(--gray); color: var(--navy); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .hero {
+    background: var(--navy);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .hero::before {
+    content: "VEXIQ";
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 18rem;
+    color: rgba(91, 196, 245, 0.04);
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    background: var(--light-blue);
+    color: var(--navy);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(3rem, 10vw, 6.5rem);
+    letter-spacing: 3px;
+    line-height: 0.95;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 em { font-style: normal; color: var(--light-blue); }
+
+  .hero p {
+    font-size: 1.1rem;
+    color: #9ec6e8;
+    max-width: 560px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    background: var(--light-blue);
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.15s;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-cta:hover { background: var(--white); color: var(--navy); transform: translateY(-2px); }
+  .hero.hidden { display: none; }
+
+  .email-help-banner {
+    background: #e8f4fd;
+    border: 1px solid #b0c8e8;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    width: 100%;
+    max-width: 860px;
+    margin: 0.25rem auto 0;
+    color: #1a4a7a;
+    font-size: 0.86rem;
+    line-height: 1.6;
+  }
+
+  .email-help-banner a {
+    color: var(--mid-blue);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .email-help-banner a:hover { text-decoration: underline; }
+
+  .events-header { background: var(--navy); padding: 3rem 2rem 2rem; }
+
+  .events-header h2 {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 3.5rem;
+    color: var(--light-blue);
+    letter-spacing: 2px;
+  }
+
+  .events-header p { color: #9ec6e8; margin-top: 0.5rem; }
+
+  .events-section-label {
+    background: var(--navy);
+    padding: 1.5rem 2rem 0.75rem;
+    border-top: 1px solid #1a3a6a;
+  }
+
+  .events-section-label h3 {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    color: var(--light-blue);
+    opacity: 0.7;
+  }
+
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5px;
+    background: #c8d8ec;
+  }
+
+  .event-card {
+    background: var(--white);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s, max-height 0.3s ease-out;
+    cursor: pointer;
+    max-height: 400px;
+  }
+
+  .event-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 5px; height: 100%;
+    background: var(--light-blue);
+  }
+
+  .event-card.in-person::before { background: #f5a623; }
+  .event-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(10, 31, 68, 0.15); }
+
+  .event-card.expanded {
+    max-height: 1000px;
+  }
+
+  .event-date {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    color: var(--mid-blue);
+    margin-bottom: 0.4rem;
+  }
+
+  .event-title { font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 0.6rem; line-height: 1.3; }
+  .event-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
+
+  .event-meta {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .event-price {
+    background: var(--navy);
+    color: var(--light-blue);
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    padding: 0.2rem 0.75rem;
+    border-radius: 2px;
+  }
+
+  .event-platform {
+    background: var(--gray);
+    color: var(--mid-blue);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    border: 1px solid #b0c8e8;
+  }
+
+  .event-expanded-content {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    display: none;
+  }
+
+  .event-card.expanded .event-expanded-content {
+    display: block;
+  }
+
+  .event-expanded-placeholder {
+    background: #f5f5f5;
+    padding: 1.5rem;
+    border-radius: 4px;
+    text-align: center;
+    color: #999;
+    font-style: italic;
+  }
+
+  .coming-soon-card {
+    background: #f8fafd;
+    border: 2px dashed #b0c8e8;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 180px;
+    gap: 0.5rem;
+  }
+
+  .coming-soon-card .cs-icon { font-size: 2rem; }
+  .coming-soon-card h4 { font-weight: 700; color: var(--navy); font-size: 1rem; }
+  .coming-soon-card p { font-size: 0.82rem; color: #7da8d4; }
+
+  .more-coming {
+    background: var(--navy);
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+
+  .more-coming p { color: #7da8d4; font-size: 1rem; font-style: italic; }
+  .more-coming strong { color: var(--light-blue); font-style: normal; }
+
+  .about-hero { background: var(--navy); padding: 3.5rem 2rem 2.5rem; text-align: center; }
+
+  .about-hero h2 {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 3.5rem;
+    color: var(--light-blue);
+    letter-spacing: 2px;
+    margin-bottom: 0.75rem;
+  }
+
+  .about-hero p { color: #9ec6e8; max-width: 600px; margin: 0 auto; line-height: 1.7; font-size: 0.95rem; }
+
+  .bios-section { background: var(--gray); padding: 3rem 2rem; }
+
+  .bios-section h3 {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 2.5rem;
+    color: var(--navy);
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .bios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .bio-card { background: var(--white); border-radius: 6px; overflow: hidden; box-shadow: 0 2px 12px rgba(10, 31, 68, 0.08); transition: transform 0.2s; }
+  .bio-card:hover { transform: translateY(-4px); }
+
+  .bio-card-top { background: var(--navy); padding: 1.5rem 1.5rem 1rem; }
+
+  .bio-name { font-family: "Bebas Neue", sans-serif; font-size: 1.6rem; letter-spacing: 2px; color: var(--light-blue); line-height: 1; margin-bottom: 0.3rem; }
+  .bio-age { font-size: 0.8rem; color: #7da8d4; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+
+  .bio-tags { padding: 1rem 1.5rem 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  .bio-tag {
+    background: var(--gray);
+    color: var(--mid-blue);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    border: 1px solid #b0c8e8;
+  }
+
+  .bio-text { padding: 1rem 1.5rem 1.5rem; font-size: 0.87rem; color: var(--text-muted); line-height: 1.7; }
+
+  #tab-signup {
+    padding-top: 2.25rem;
+    background: var(--gray);
+  }
+
+  .signup-email-notice {
+    background: #e8f4fd;
+    border: 1px solid #b0c8e8;
+    color: #1a4a7a;
+    margin: 0 2rem 1.25rem;
+    border-radius: 6px;
+    padding: 0.95rem 1rem;
+    font-size: 0.86rem;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .signup-email-notice a {
+    color: var(--mid-blue);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .signup-email-notice a:hover { text-decoration: underline; }
+
+  .signup-section { display: grid; grid-template-columns: 1fr 1fr; }
+
+  .signup-left { background: var(--navy); padding: 4rem 3rem; color: var(--white); }
+
+  .signup-left h2 {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 3.5rem;
+    color: var(--light-blue);
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .signup-left p { color: #9ec6e8; line-height: 1.7; font-size: 0.95rem; margin-bottom: 2rem; }
+
+  .pricing-box { background: var(--light-blue); color: var(--navy); padding: 1.5rem; border-radius: 4px; margin-bottom: 1.5rem; }
+
+  .pricing-box h4 { font-family: "Bebas Neue", sans-serif; font-size: 1.5rem; letter-spacing: 1px; margin-bottom: 0.25rem; color: var(--navy); }
+  .pricing-box .price { font-family: "Bebas Neue", sans-serif; font-size: 3rem; color: var(--navy); line-height: 1; }
+  .pricing-box p { color: #1a4a7a; font-size: 0.82rem; margin: 0.5rem 0 0; }
+
+  .what-included { list-style: none; margin-top: 1.5rem; }
+
+  .what-included li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    font-size: 0.88rem;
+    color: #9ec6e8;
+    border-bottom: 1px solid #1a3a6a;
+  }
+
+  .check {
+    width: 20px; height: 20px;
+    background: var(--light-blue);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.65rem;
+    color: var(--navy);
+    font-weight: 900;
+  }
+
+  .signup-right {
+    background: var(--white);
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+  }
+
+  .signup-right h3 { font-family: "Bebas Neue", sans-serif; font-size: 2rem; letter-spacing: 2px; color: var(--navy); margin-bottom: 0.25rem; }
+
+  .signup-form-gap {
+    height: 0.8rem;
+    width: 100%;
+  }
+
+  .form-wrap {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 2px solid #b0c8e8;
+    margin-bottom: 1rem;
+  }
+
+  .form-wrap iframe {
+    display: block;
+    width: 100%;
+    border: none;
+  }
+
+  .form-fallback-btn {
+    display: inline-block;
+    background: var(--navy);
+    color: var(--light-blue);
+    font-family: "DM Sans", sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    margin-bottom: 0.8rem;
+  }
+
+  .form-fallback-btn:hover {
+    background: var(--light-blue);
+    color: var(--navy);
+    transform: translateY(-2px);
+  }
+
+  footer { background: #050d1f; padding: 2rem; text-align: center; border-top: 3px solid var(--light-blue); }
+  footer p { color: #4a6a9a; font-size: 0.82rem; margin-bottom: 0.35rem; }
+  footer strong { color: var(--light-blue); }
+  footer a { color: var(--light-blue); text-decoration: none; font-weight: 700; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 640px) {
+    nav { display: none; }
+    .mobile-menu { display: block; }
+    header { padding: 0 1.25rem; }
+
+    .hero { padding: 3rem 1.25rem 2.5rem; }
+    .hero h1 { font-size: 2.8rem; }
+    .hero::before { font-size: 6rem; }
+
+    .events-header { padding: 2rem 1.25rem 1.5rem; }
+    .events-header h2 { font-size: 2.5rem; }
+
+    .signup-section { grid-template-columns: 1fr; }
+    .signup-left, .signup-right { padding: 2.5rem 1.5rem; }
+    .signup-left h2 { font-size: 2.5rem; }
+
+    .about-hero { padding: 2.5rem 1.25rem; }
+    .about-hero h2 { font-size: 2.5rem; }
+
+    .bios-section { padding: 2rem 1.25rem; }
+
+    #tab-signup { padding-top: 1.5rem; }
+    .signup-email-notice { margin: 0 1.25rem 1rem; }
+
+    .logo-img { height: 40px; }
+    .logo-text { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" onclick="switchTabByName('events')">
+    <svg class="logo-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+      <rect width="400" height="400" fill="#0A1F44" rx="200"/>
+      <g stroke="#5BC4F5" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M80 200 A120 120 0 0 1 320 200"/>
+        <path d="M100 200 A100 100 0 0 1 300 200"/>
+      </g>
+      <g stroke="#5BC4F5" stroke-width="6" fill="none">
+        <circle cx="130" cy="130" r="3"/>
+        <circle cx="130" cy="160" r="3"/>
+        <circle cx="130" cy="190" r="3"/>
+        <circle cx="130" cy="220" r="3"/>
+        <circle cx="130" cy="250" r="3"/>
+        <path d="M140 130 Q160 140 170 150"/>
+        <path d="M140 160 Q160 165 175 170"/>
+        <path d="M140 190 Q160 190 175 190"/>
+        <path d="M140 220 Q160 215 175 210"/>
+        <path d="M140 250 Q160 240 170 230"/>
+        <path d="M190 120 L210 120 L220 140 L210 160 L190 160 L180 140 Z"/>
+        <circle cx="200" cy="140" r="6" stroke="#5BC4F5" stroke-width="2"/>
+      </g>
+      <text x="200" y="330" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+        <tspan fill="#FFFFFF">FUTURE</tspan><tspan fill="#5BC4F5">MINDS</tspan>
+      </text>
+      <text x="200" y="360" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#5BC4F5" text-anchor="middle">VEX IQ - STEM</text>
+    </svg>
+    <span class="logo-text"><span class="future">Future</span><span class="mind">Minds</span></span>
+  </a>
+
+  <nav>
+    <button class="tab-btn active" onclick="switchTab('events', this)">Events</button>
+    <button class="tab-btn" onclick="switchTab('about', this)">About Us</button>
+    <button class="tab-btn" onclick="switchTab('signup', this)">Sign Up</button>
+  </nav>
+
+  <select class="mobile-menu" onchange="switchTabBySelect(this)">
+    <option value="events">📅 Events</option>
+    <option value="about">👥 About Us</option>
+    <option value="signup">✏️ Sign Up</option>
+  </select>
+</header>
+
+<div class="hero" id="site-hero">
+  <div class="hero-tag">🤖 Summer 2026 VEX IQ Workshops</div>
+  <h1>Building<br /><em>Future</em> Minds</h1>
+  <p>Online VEX IQ workshops taught by experienced competitors — learn robotics, coding, engineering, and leadership this summer.</p>
+  <button class="hero-cta" onclick="switchTabByName('signup')">Register Now →</button>
+
+  <div class="email-help-banner">
+    If you have any questions or issues, please feel free to email us!
+    <a href="mailto:curating.futureminds@gmail.com">curating.futureminds@gmail.com</a>
+    We will respond within 24-48 hours!
+  </div>
+</div>
+
+<div class="content">
+
+  <div id="tab-events" class="tab-panel active">
+    <div class="events-header">
+      <h2>Upcoming Workshops</h2>
+      <p>Online and in-person sessions for Rising Grades 3–8, focused on the new VEX IQ Challenge: Level Up! — Summer 2026</p>
+    </div>
+
+    <div class="events-section-label">
+      <h3>💻 Online Sessions</h3>
+    </div>
+    <div class="events-grid">
+      <div class="event-card" onclick="toggleEventExpand(this)">
+        <div class="event-date">June 5 · 3:00 – 4:00 PM</div>
+        <div class="event-title">Introduction to the 25–26 VEX IQ Game: Level Up</div>
+        <div class="event-desc">Learn about the new VEX IQ Challenge Level Up! Look through the Game Manual, create basic strategies, and get a better understanding of Level Up with this online class!</div>
+        <div class="event-meta">
+          <span class="event-platform">💻 Zoom</span>
+          <span>Rising Grades 3–8</span>
+          <span class="event-price">$5</span>
+        </div>
+        <div class="event-expanded-content">
+          <div class="event-expanded-placeholder">📚 More info coming soon</div>
+        </div>
+      </div>
+
+      <div class="event-card" onclick="toggleEventExpand(this)">
+        <div class="event-date">June 7 · 11:00 AM – 12:30 PM</div>
+        <div class="event-title">Coding, Engineering & Notebooking</div>
+        <div class="event-desc">How to navigate aspects of the Engineering Notebook, Coding, and the Engineering Design Process (EDP) for the new VEX IQ Challenge Level Up!</div>
+        <div class="event-meta">
+          <span class="event-platform">💻 Zoom</span>
+          <span>Rising Grades 3–8</span>
+          <span class="event-price">$6</span>
+        </div>
+        <div class="event-expanded-content">
+          <div class="event-expanded-placeholder">📚 More info coming soon</div>
+        </div>
+      </div>
+
+      <div class="event-card" onclick="toggleEventExpand(this)">
+        <div class="event-date">June 8 · 2:00 – 3:00 PM</div>
+        <div class="event-title">Leadership Workshop</div>
+        <div class="event-desc">Being a leader may seem intimidating but we can lessen that load! Learn about the different qualities of a leader and how they apply to VEX IQ.</div>
+        <div class="event-meta">
+          <span class="event-platform">💻 Zoom</span>
+          <span>Rising Grades 5–8</span>
+          <span class="event-price">$5</span>
+        </div>
+        <div class="event-expanded-content">
+          <div class="event-expanded-placeholder">📚 More info coming soon</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="events-section-label">
+      <h3>📍 In-Person Sessions</h3>
+    </div>
+    <div class="events-grid">
+      <div class="coming-soon-card">
+        <div class="cs-icon">🔧</div>
+        <h4>In-Person Workshops Coming Soon</h4>
+        <p>We're finalizing details — check back soon!</p>
+      </div>
+      <div class="coming-soon-card">
+        <div class="cs-icon">🤖</div>
+        <h4>More Sessions Being Planned</h4>
+        <p>Hands-on robotics sessions coming this summer.</p>
+      </div>
+    </div>
+
+    <div class="more-coming">
+      <p>🚀 <strong>More workshops are on the way!</strong> Follow us and check back as we finalize our full summer schedule.</p>
+    </div>
+  </div>
+
+  <div id="tab-about" class="tab-panel">
+    <div class="about-hero">
+      <h2>Meet The Team</h2>
+      <p>We are four young roboticists who have competed in VEX IQ for years and want to share everything we've learned. FutureMinds was created to help the next generation of competitors grow their skills, confidence, and passion for STEM.</p>
+    </div>
+
+    <div class="bios-section">
+      <h3>Our Instructors</h3>
+      <div class="bios-grid">
+
+        <div class="bio-card">
+          <div class="bio-card-top">
+            <div class="bio-name">Anshika Aindala</div>
+            <div class="bio-age">13 years old · Rising 9th Grader, AAI</div>
+          </div>
+          <div class="bio-tags">
+            <span class="bio-tag">🏆 World Championship Qualifier x4</span>
+            <span class="bio-tag">🤖 VEX IQ · 5 Years</span>
+            <span class="bio-tag">🎵 Guitar</span>
+            <span class="bio-tag">🎨 Painting & Crafts</span>
+            <span class="bio-tag">📊 FBLA NLC</span>
+          </div>
+          <div class="bio-text">Hey! My name is Anshika and I have been in the VEX IQ program for 5 years! My time in robotics has been so fun and I have learned so much. I participated in FBLA as secretary of my chapter at Hendricks Middle and I am competing in NLC this summer! As my VEX IQ journey comes to an end, I am dedicating my summer to teaching others interested in VEX IQ.</div>
+        </div>
+
+        <div class="bio-card">
+          <div class="bio-card-top">
+            <div class="bio-name">Chetana Sirigireddy</div>
+            <div class="bio-age">13 years old · Rising 9th Grader, AAI</div>
+          </div>
+          <div class="bio-tags">
+            <span class="bio-tag">🏅 Design Award</span>
+            <span class="bio-tag">🏅 Innovate Award</span>
+            <span class="bio-tag">🏅 Judges Award</span>
+            <span class="bio-tag">🤖 VEX IQ · 1 Year</span>
+            <span class="bio-tag">🏥 HOSA President</span>
+            <span class="bio-tag">📊 FBLA NLC Qualifier</span>
+          </div>
+          <div class="bio-text">Hi, my name is Chetana and I have been in the VEX IQ program for one year. My time in robotics has been extremely rewarding — I learned so much about engineering, collaborating, and coding and won 3 awards. I was in HOSA all three years of middle school, became president in 8th grade, won the CTAE award, and qualified for both the HOSA International and FBLA National Leadership Conferences.</div>
+        </div>
+
+        <div class="bio-card">
+          <div class="bio-card-top">
+            <div class="bio-name">Mithra Ambati</div>
+            <div class="bio-age">14 years old · Rising 9th Grader, AAI</div>
+          </div>
+          <div class="bio-tags">
+            <span class="bio-tag">🥇 Teamwork 1st Place</span>
+            <span class="bio-tag">🏅 Innovate Award</span>
+            <span class="bio-tag">🏅 Design Award</span>
+            <span class="bio-tag">🤖 VEX IQ · 2 Years</span>
+            <span class="bio-tag">🏆 State Qualifier</span>
+            <span class="bio-tag">🏐 Volleyball</span>
+            <span class="bio-tag">💃 Dance</span>
+          </div>
+          <div class="bio-text">My name is Mithra and I have been doing VEX IQ for 2 years and have won many awards including the Teamwork 1st Place, Innovate Award, Design Award, Judges Award, and many more. Outside of robotics I enjoy volleyball, cooking/baking, and dance. I wanted to take this opportunity to teach others about robotics and help them grow in it.</div>
+        </div>
+
+        <div class="bio-card">
+          <div class="bio-card-top">
+            <div class="bio-name">Jeanina Xavier</div>
+            <div class="bio-age">13 years old · Rising 9th Grader, AAI</div>
+          </div>
+          <div class="bio-tags">
+            <span class="bio-tag">🏆 World Championship Qualifier x4</span>
+            <span class="bio-tag">🤖 VEX IQ · 4 Years</span>
+            <span class="bio-tag">🎵 Guitar & Singing</span>
+            <span class="bio-tag">💃 Dance</span>
+          </div>
+          <div class="bio-text">Hello! My name is Jeanina and I have been in VEX IQ for 4 years. This program has not just boosted my robotics and STEM skills but helped me become more confident in talking to others, working with a team, and so much more. I want to pass on my knowledge to upcoming VEX IQ participants and help them be successful in this field and grow as people.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-signup" class="tab-panel">
+    <div class="signup-email-notice">
+      If you have any questions or issues, please feel free to email us!
+      <a href="mailto:curating.futureminds@gmail.com">curating.futureminds@gmail.com</a>
+      We will respond within 24-48 hours!
+    </div>
+
+    <div class="signup-section">
+      <div class="signup-left">
+        <h2>Register Today</h2>
+        <p>Spots fill up fast — secure your seat in the workshop of your choice. All online sessions open to Grades 3–8.</p>
+        <div class="pricing-box">
+          <h4>Per Workshop</h4>
+          <div class="price">$5–$6</div>
+          <p>Online sessions $5–$6. In-person pricing coming soon.</p>
+        </div>
+        <ul class="what-included">
+          <li><span class="check">✓</span> Online — join from anywhere</li>
+          <li><span class="check">✓</span> Taught by experienced VEX IQ competitors</li>
+          <li><span class="check">✓</span> Focused on the new Level Up challenge</li>
+          <li><span class="check">✓</span> Learn coding, engineering & notebooking</li>
+          <li><span class="check">✓</span> Leadership skills workshop included</li>
+          <li><span class="check">✓</span> In-person sessions coming soon</li>
+        </ul>
+      </div>
+
+      <div class="signup-right">
+        <h3>Fill Out the Form</h3>
+        <div class="signup-form-gap"></div>
+
+        <a class="form-fallback-btn" href="https://forms.gle/NVaCaPLEb4TzqAnK8" target="_blank">Can't see the form? Click here to open it →</a>
+
+        <div class="form-wrap">
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe63eZ9q2Z2e6eb4jMFzWAf9Etjbj0b8O7-UlpBflEafPZUpQ/viewform?embedded=true" width="100%" height="1146" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p><strong>FutureMinds Workshops</strong> · Cumming, GA</p>
+  <p>Questions? Email us <a href="mailto:curating.futureminds@gmail.com">curating.futureminds@gmail.com</a></p>
+</footer>
+
+<script>
+  function switchTab(name, btn) {
+    document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+
+    const panel = document.getElementById("tab-" + name);
+    if (panel) panel.classList.add("active");
+    if (btn) btn.classList.add("active");
+
+    var hero = document.getElementById("site-hero");
+    if (hero) {
+      if (name === "events" || name === "about") {
+        hero.classList.remove("hidden");
+      } else {
+        hero.classList.add("hidden");
+      }
+    }
+
+    window.parent.postMessage({ type: "resize" }, "*");
+    notifyHeight();
+  }
+
+  function switchTabBySelect(sel) {
+    switchTab(sel.value, null);
+  }
+
+  function switchTabByName(name) {
+    const btn = [...document.querySelectorAll(".tab-btn")]
+      .find(b => b.textContent.toLowerCase().includes(name));
+    switchTab(name, btn || null);
+    const sel = document.querySelector(".mobile-menu");
+    if (sel) sel.value = name;
+  }
+
+  function toggleEventExpand(card) {
+    const isExpanded = card.classList.contains("expanded");
+    
+    document.querySelectorAll(".event-card").forEach(c => {
+      c.classList.remove("expanded");
+    });
+
+    if (!isExpanded) {
+      card.classList.add("expanded");
+    }
+  }
+
+  function notifyHeight() {
+    const h = document.body.scrollHeight;
+    window.parent.postMessage({ height: h }, "*");
+  }
+
+  window.addEventListener("load", notifyHeight);
+  window.addEventListener("resize", notifyHeight);
+  document.addEventListener("click", notifyHeight);
+</script>
+</body>
+</html>

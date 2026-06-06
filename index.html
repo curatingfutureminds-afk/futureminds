@@ -219,6 +219,21 @@
   .event-card.in-person::before { background: #f5a623; }
   .event-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(10, 31, 68, 0.15); }
 
+  .event-card.finished {
+    background: #e0e0e0;
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .event-card.finished:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .event-card.finished::before {
+    background: #999;
+  }
+
   .event-date {
     font-family: "Bebas Neue", sans-serif;
     font-size: 1rem;
@@ -227,8 +242,15 @@
     margin-bottom: 0.4rem;
   }
 
+  .event-card.finished .event-date {
+    color: #666;
+  }
+
   .event-title { font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 0.6rem; line-height: 1.3; }
+  .event-card.finished .event-title { color: #666; }
+  
   .event-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
+  .event-card.finished .event-desc { color: #888; }
 
   .event-meta {
     display: flex;
@@ -242,6 +264,10 @@
     align-items: center;
   }
 
+  .event-card.finished .event-meta {
+    color: #888;
+  }
+
   .event-price {
     background: var(--navy);
     color: var(--light-blue);
@@ -250,6 +276,11 @@
     letter-spacing: 1px;
     padding: 0.2rem 0.75rem;
     border-radius: 2px;
+  }
+
+  .event-card.finished .event-price {
+    background: #999;
+    color: #fff;
   }
 
   .event-platform {
@@ -261,6 +292,25 @@
     padding: 0.2rem 0.6rem;
     border-radius: 2px;
     border: 1px solid #b0c8e8;
+  }
+
+  .event-card.finished .event-platform {
+    background: #ccc;
+    color: #666;
+    border-color: #999;
+  }
+
+  .finished-badge {
+    display: inline-block;
+    background: #999;
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.3rem 0.6rem;
+    border-radius: 2px;
+    margin-bottom: 0.5rem;
   }
 
   /* Modal for expanded event */
@@ -706,7 +756,8 @@
       <h3>💻 Online Sessions</h3>
     </div>
     <div class="events-grid">
-      <div class="event-card" onclick="openEventModal(0)">
+      <div class="event-card finished">
+        <div class="finished-badge">✓ Finished</div>
         <div class="event-date">June 5 · 3:00 – 4:00 PM</div>
         <div class="event-title">Introduction to the 25–26 VEX IQ Game: Level Up</div>
         <div class="event-desc">Learn about the new VEX IQ Challenge Level Up! Look through the Game Manual, create basic strategies, and get a better understanding of Level Up with this online class!</div>
@@ -718,7 +769,7 @@
       </div>
 
       <div class="event-card" onclick="openEventModal(1)">
-        <div class="event-date">June 7 · 11:00 AM – 12:30 PM</div>
+        <div class="event-date">June 9 · 4:00 – 5:30 PM</div>
         <div class="event-title">Coding, Engineering & Notebooking</div>
         <div class="event-desc">How to navigate aspects of the Engineering Notebook, Coding, and the Engineering Design Process (EDP) for the new VEX IQ Challenge Level Up!</div>
         <div class="event-meta">
@@ -908,7 +959,7 @@
       price: "$5"
     },
     {
-      date: "June 7 · 11:00 AM – 12:30 PM",
+      date: "June 9 · 4:00 – 5:30 PM",
       title: "Coding, Engineering & Notebooking",
       desc: "How to navigate aspects of the Engineering Notebook, Coding, and the Engineering Design Process (EDP) for the new VEX IQ Challenge Level Up!",
       platform: "💻 Zoom",

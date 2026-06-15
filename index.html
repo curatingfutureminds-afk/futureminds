@@ -178,7 +178,7 @@
     right: 0;
     bottom: 0;
     background: rgba(255, 255, 255, 0.88);
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     z-index: 500;
@@ -238,6 +238,7 @@
     background: rgba(200, 200, 200, 0.6);
     pointer-events: none;
     z-index: 30;
+    display: none;
   }
 
   .event-card {
@@ -761,12 +762,10 @@
         <h3>💻 Online Sessions</h3>
       </div>
       <div class="events-grid">
-        <div class="grayed-overlay"></div>
-        <div class="event-card finished">
-          <div class="finished-badge">✓ Finished</div>
-          <div class="event-date">June 5 · 3:00 – 4:00 PM</div>
-          <div class="event-title">Introduction to the 25–26 VEX IQ Game: Level Up</div>
-          <div class="event-desc">Learn about the new VEX IQ Challenge Level Up! Look through the Game Manual, create basic strategies, and get a better understanding of Level Up with this online class!</div>
+        <div class="event-card" onclick="openEventModal(0)">
+          <div class="event-date">July 15 · 11:00 AM – 12:00 PM</div>
+          <div class="event-title">Notebook Workshop</div>
+          <div class="event-desc">Dive deep into making a world-qualifying engineering notebook by 4 time world champion qualifiers. Learn how to tailor your notebook to the rubric, and receive a perfect score!</div>
           <div class="event-meta">
             <span class="event-platform">💻 Zoom</span>
             <span>Rising Grades 3–8</span>
@@ -774,21 +773,10 @@
           </div>
         </div>
 
-        <div class="event-card">
-          <div class="event-date">June 9 · 4:00 – 5:30 PM</div>
-          <div class="event-title">Coding, Engineering & Notebooking</div>
-          <div class="event-desc">How to navigate aspects of the Engineering Notebook, Coding, and the Engineering Design Process (EDP) for the new VEX IQ Challenge Level Up!</div>
-          <div class="event-meta">
-            <span class="event-platform">💻 Zoom</span>
-            <span>Rising Grades 3–8</span>
-            <span class="event-price">$6</span>
-          </div>
-        </div>
-
-        <div class="event-card">
-          <div class="event-date">June 8 · 2:00 – 3:00 PM</div>
+        <div class="event-card" onclick="openEventModal(1)">
+          <div class="event-date">July 17 · 11:00 AM – 12:00 PM</div>
           <div class="event-title">Leadership Workshop</div>
-          <div class="event-desc">Being a leader may seem intimidating but we can lessen that load! Learn about the different qualities of a leader and how they apply to VEX IQ.</div>
+          <div class="event-desc">Explore more in becoming a future leader with FutureMinds! Learn about leaders duties, public speaking, and project management.</div>
           <div class="event-meta">
             <span class="event-platform">💻 Zoom</span>
             <span>Rising Grades 5–8</span>
@@ -801,16 +789,15 @@
         <h3>📍 In-Person Sessions</h3>
       </div>
       <div class="events-grid">
-        <div class="grayed-overlay"></div>
-        <div class="coming-soon-card">
-          <div class="cs-icon">🔧</div>
-          <h4>In-Person Workshops Coming Soon</h4>
-          <p>We're finalizing details — check back soon!</p>
-        </div>
-        <div class="coming-soon-card">
-          <div class="cs-icon">🤖</div>
-          <h4>More Sessions Being Planned</h4>
-          <p>Hands-on robotics sessions coming this summer.</p>
+        <div class="event-card in-person" onclick="openEventModal(2)">
+          <div class="event-date">July 20–24 · 3:30 – 5:30 PM</div>
+          <div class="event-title">FutureMinds - VEX IQ LEVEL UP BOOTCAMP</div>
+          <div class="event-desc">Build, Code, Drive, Compete. A 5 day training course for students in rising grades 3-7 to train thoroughly for success in the next season.</div>
+          <div class="event-meta">
+            <span class="event-platform">📍 In-Person</span>
+            <span>Rising Grades 3–7</span>
+            <span class="event-price">TBD</span>
+          </div>
         </div>
       </div>
 
@@ -830,14 +817,14 @@
         <div class="event-modal-desc" id="modalDesc"></div>
         <div class="event-modal-meta" id="modalMeta"></div>
       </div>
-      <div class="event-expanded-placeholder">📚 More info coming soon</div>
+      <div id="modalExpanded" class="event-expanded-placeholder"></div>
     </div>
   </div>
 
   <div id="tab-about" class="tab-panel">
     <div class="about-hero">
       <h2>Meet The Team</h2>
-      <p>We are four young roboticists who have competed in VEX IQ for years and want to share everything we've learned. FutureMinds was created to help the next generation of competitors grow their skills, confidence, and passion for STEM.</p>
+      <p>We are four young roboticists who have competed in VEX IQ for years and want to share everything we've learned. FutureMinds was created to help the next generation of competitors grow th[...]
     </div>
 
     <div class="bios-section">
@@ -856,7 +843,7 @@
             <span class="bio-tag">🎨 Painting & Crafts</span>
             <span class="bio-tag">📊 FBLA NLC</span>
           </div>
-          <div class="bio-text">Hey! My name is Anshika and I have been in the VEX IQ program for 5 years! My time in robotics has been so fun and I have learned so much. I participated in FBLA as secretary of my chapter at Hendricks Middle and I am competing in NLC this summer! As my VEX IQ journey comes to an end, I am dedicating my summer to teaching others interested in VEX IQ.</div>
+          <div class="bio-text">Hey! My name is Anshika and I have been in the VEX IQ program for 5 years! My time in robotics has been so fun and I have learned so much. I participated in FBLA a[...]
         </div>
 
         <div class="bio-card">
@@ -872,7 +859,7 @@
             <span class="bio-tag">🏥 HOSA President</span>
             <span class="bio-tag">📊 FBLA NLC Qualifier</span>
           </div>
-          <div class="bio-text">Hi, my name is Chetana and I have been in the VEX IQ program for one year. My time in robotics has been extremely rewarding — I learned so much about engineering, collaborating, and coding and won 3 awards. I was in HOSA all three years of middle school, became president in 8th grade, won the CTAE award, and qualified for both the HOSA International and FBLA National Leadership Conferences.</div>
+          <div class="bio-text">Hi, my name is Chetana and I have been in the VEX IQ program for one year. My time in robotics has been extremely rewarding — I learned so much about engineering[...]
         </div>
 
         <div class="bio-card">
@@ -889,7 +876,7 @@
             <span class="bio-tag">🏐 Volleyball</span>
             <span class="bio-tag">💃 Dance</span>
           </div>
-          <div class="bio-text">My name is Mithra and I have been doing VEX IQ for 2 years and have won many awards including the Teamwork 1st Place, Innovate Award, Design Award, Judges Award, and many more. Outside of robotics I enjoy volleyball, cooking/baking, and dance. I wanted to take this opportunity to teach others about robotics and help them grow in it.</div>
+          <div class="bio-text">My name is Mithra and I have been doing VEX IQ for 2 years and have won many awards including the Teamwork 1st Place, Innovate Award, Design Award, Judges Award, a[...]
         </div>
 
         <div class="bio-card">
@@ -903,7 +890,7 @@
             <span class="bio-tag">🎵 Guitar & Singing</span>
             <span class="bio-tag">💃 Dance</span>
           </div>
-          <div class="bio-text">Hello! My name is Jeanina and I have been in VEX IQ for 4 years. This program has not just boosted my robotics and STEM skills but helped me become more confident in talking to others, working with a team, and so much more. I want to pass on my knowledge to upcoming VEX IQ participants and help them be successful in this field and grow as people.</div>
+          <div class="bio-text">Hello! My name is Jeanina and I have been in VEX IQ for 4 years. This program has not just boosted my robotics and STEM skills but helped me become more confident [...]
         </div>
 
       </div>
@@ -959,28 +946,31 @@
 <script>
   const eventData = [
     {
-      date: "June 5 · 3:00 – 4:00 PM",
-      title: "Introduction to the 25–26 VEX IQ Game: Level Up",
-      desc: "Learn about the new VEX IQ Challenge Level Up! Look through the Game Manual, create basic strategies, and get a better understanding of Level Up with this online class!",
+      date: "July 15 · 11:00 AM – 12:00 PM",
+      title: "Notebook Workshop",
+      desc: "Dive deep into making a world-qualifying engineering notebook by 4 time world champion qualifiers. Learn how to tailor your notebook to the rubric, and receive a perfect score! Understand how to fill a innovate form, and how to deliver great project management!",
       platform: "💻 Zoom",
       grades: "Rising Grades 3–8",
-      price: "$5"
+      price: "$5",
+      expanded: "Dive deep into making a world-qualifying engineering notebook by 4 time world champion qualifiers. Learn how to tailor your notebook to the rubric, and receive a perfect score! Understand how to fill a innovate form, and how to deliver great project management!"
     },
     {
-      date: "June 9 · 4:00 – 5:30 PM",
-      title: "Coding, Engineering & Notebooking",
-      desc: "How to navigate aspects of the Engineering Notebook, Coding, and the Engineering Design Process (EDP) for the new VEX IQ Challenge Level Up!",
-      platform: "💻 Zoom",
-      grades: "Rising Grades 3–8",
-      price: "$6"
-    },
-    {
-      date: "June 8 · 2:00 – 3:00 PM",
+      date: "July 17 · 11:00 AM – 12:00 PM",
       title: "Leadership Workshop",
-      desc: "Being a leader may seem intimidating but we can lessen that load! Learn about the different qualities of a leader and how they apply to VEX IQ.",
+      desc: "Explore more in becoming a future leader with FutureMinds! Elaborating off of our first Leadership Workshop, learn about leaders duties, public speaking, and project management.",
       platform: "💻 Zoom",
       grades: "Rising Grades 5–8",
-      price: "$5"
+      price: "$5",
+      expanded: "Explore more in becoming a future leader with FutureMinds! Elaborating off of our first Leadership Workshop, learn about leaders duties, public speaking, and project management. Learn how to pull in a crowd, and lead any team to victory!"
+    },
+    {
+      date: "July 20–24 · 3:30 – 5:30 PM",
+      title: "FutureMinds - VEX IQ LEVEL UP BOOTCAMP",
+      desc: "Build, Code, Drive, Compete. A 5 day training course for students in rising grades 3-7. This boot camp is meant to train students thoroughly to attain success in the next season.",
+      platform: "📍 In-Person",
+      grades: "Rising Grades 3–7",
+      price: "TBD",
+      expanded: "The VEX IQ LEVEL UP Bootcamp is a 5 day training course for students in rising grades 3-7. This boot camp is meant to train students thoroughly to attain success in the next season and later on. We cover every aspect of VEX IQ Robotics so students will either be prepared for robotics team tryouts in the next season or if they have done robotics before they have many opportunities to advance their skills with VEX IQ World Champion Qualifiers ready to help them advance their skills in Driving, Coding, and Building to the next level. We will be building full drivable robots for the next competition season, covering every aspect necessary in VEX IQ. We will also be practicing driving skills on the robotics field over the course of 5 days."
     }
   ];
 
@@ -989,6 +979,7 @@
     document.getElementById("modalDate").textContent = event.date;
     document.getElementById("modalTitle").textContent = event.title;
     document.getElementById("modalDesc").textContent = event.desc;
+    document.getElementById("modalExpanded").innerHTML = `<p>${event.expanded}</p>`;
     
     const metaHTML = `
       <span class="event-platform">${event.platform}</span>
@@ -1003,53 +994,30 @@
     document.getElementById("eventModal").classList.remove("active");
   }
 
-  document.getElementById("eventModal").addEventListener("click", function(e) {
-    if (e.target === this) {
-      closeEventModal();
-    }
-  });
+  function switchTab(tabName, element) {
+    const panels = document.querySelectorAll(".tab-panel");
+    panels.forEach(panel => panel.classList.remove("active"));
+    document.getElementById(`tab-${tabName}`).classList.add("active");
 
-  function switchTab(name, btn) {
-    document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
-    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-
-    const panel = document.getElementById("tab-" + name);
-    if (panel) panel.classList.add("active");
-    if (btn) btn.classList.add("active");
-
-    var hero = document.getElementById("site-hero");
-    if (hero) {
-      if (name === "events" || name === "about") {
-        hero.classList.remove("hidden");
-      } else {
-        hero.classList.add("hidden");
-      }
-    }
-
-    window.parent.postMessage({ type: "resize" }, "*");
-    notifyHeight();
+    const buttons = document.querySelectorAll(".tab-btn");
+    buttons.forEach(btn => btn.classList.remove("active"));
+    element.classList.add("active");
   }
 
-  function switchTabBySelect(sel) {
-    switchTab(sel.value, null);
+  function switchTabByName(tabName) {
+    const panels = document.querySelectorAll(".tab-panel");
+    panels.forEach(panel => panel.classList.remove("active"));
+    document.getElementById(`tab-${tabName}`).classList.add("active");
+
+    const buttons = document.querySelectorAll(".tab-btn");
+    buttons.forEach(btn => btn.classList.remove("active"));
+    const selector = `.tab-btn:nth-of-type(${tabName === "events" ? "1" : tabName === "about" ? "2" : "3"})`;
+    document.querySelector(selector).classList.add("active");
   }
 
-  function switchTabByName(name) {
-    const btn = [...document.querySelectorAll(".tab-btn")]
-      .find(b => b.textContent.toLowerCase().includes(name));
-    switchTab(name, btn || null);
-    const sel = document.querySelector(".mobile-menu");
-    if (sel) sel.value = name;
+  function switchTabBySelect(select) {
+    switchTabByName(select.value);
   }
-
-  function notifyHeight() {
-    const h = document.body.scrollHeight;
-    window.parent.postMessage({ height: h }, "*");
-  }
-
-  window.addEventListener("load", notifyHeight);
-  window.addEventListener("resize", notifyHeight);
-  document.addEventListener("click", notifyHeight);
 </script>
 </body>
 </html>

@@ -18,7 +18,7 @@
     --text-muted: #555;
   }
 
-  body { font-family: "DM Sans", sans-serif; background: var(--navy); color: var(--white); }
+  body { font-family: "DM Sans", sans-serif; background: var(--navy); color: var(--white); display: flex; flex-direction: column; min-height: 100vh; }
 
   header {
     background: var(--navy);
@@ -71,7 +71,7 @@
     cursor: pointer;
   }
 
-  .content { background: var(--gray); color: var(--navy); }
+  .content { background: var(--gray); color: var(--navy); flex: 1; }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
@@ -514,15 +514,15 @@
     margin: 0 auto;
   }
 
-  .bio-card { background: var(--white); border-radius: 6px; overflow: hidden; box-shadow: 0 2px 12px rgba(10, 31, 68, 0.08); transition: transform 0.2s; }
+  .bio-card { background: var(--white); border-radius: 6px; overflow: visible; box-shadow: 0 2px 12px rgba(10, 31, 68, 0.08); transition: transform 0.2s; }
   .bio-card:hover { transform: translateY(-4px); }
 
-  .bio-card-top { background: var(--navy); padding: 1.5rem 1.5rem 1rem; }
+  .bio-card-top { background: var(--navy); padding: 1.5rem 1.5rem 1rem; overflow: visible; }
 
   .bio-name { font-family: "Bebas Neue", sans-serif; font-size: 1.6rem; letter-spacing: 2px; color: var(--light-blue); line-height: 1; margin-bottom: 0.3rem; }
   .bio-age { font-size: 0.8rem; color: #7da8d4; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
 
-  .bio-tags { padding: 1rem 1.5rem 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .bio-tags { padding: 1rem 1.5rem 0; display: flex; flex-wrap: wrap; gap: 0.4rem; overflow: visible; }
 
   .bio-tag {
     background: var(--gray);
@@ -535,7 +535,7 @@
     border: 1px solid #b0c8e8;
   }
 
-  .bio-text { padding: 1rem 1.5rem 1.5rem; font-size: 0.87rem; color: var(--text-muted); line-height: 1.7; }
+  .bio-text { padding: 1rem 1.5rem 1.5rem; font-size: 0.87rem; color: var(--text-muted); line-height: 1.7; overflow: visible; }
 
   #tab-signup {
     padding-top: 2.25rem;
@@ -763,24 +763,13 @@
       </div>
       <div class="events-grid">
         <div class="event-card" onclick="openEventModal(0)">
-          <div class="event-date">July 15 · 11:00 AM – 12:00 PM</div>
-          <div class="event-title">Notebook Workshop</div>
-          <div class="event-desc">Dive deep into making a world-qualifying engineering notebook by 4 time world champion qualifiers. Learn how to tailor your notebook to the rubric, and receive a perfect score!</div>
+          <div class="event-date">July 22 · 11:00 AM – 12:00 PM</div>
+          <div class="event-title">Exploring Notebook Strategies</div>
+          <div class="event-desc">Dive deep into making a world-qualifying engineering notebook by 4 time world champion qualifiers. Learn how to tailor your notebook to the rubric, and receive a[...]</div>
           <div class="event-meta">
             <span class="event-platform">💻 Zoom</span>
             <span>Rising Grades 3–8</span>
-            <span class="event-price">$5</span>
-          </div>
-        </div>
-
-        <div class="event-card" onclick="openEventModal(1)">
-          <div class="event-date">July 17 · 11:00 AM – 12:00 PM</div>
-          <div class="event-title">Leadership Workshop</div>
-          <div class="event-desc">Explore more in becoming a future leader with FutureMinds! Learn about leaders duties, public speaking, and project management.</div>
-          <div class="event-meta">
-            <span class="event-platform">💻 Zoom</span>
-            <span>Rising Grades 5–8</span>
-            <span class="event-price">$5</span>
+            <span class="event-price">$6</span>
           </div>
         </div>
       </div>
@@ -789,14 +778,14 @@
         <h3>📍 In-Person Sessions</h3>
       </div>
       <div class="events-grid">
-        <div class="event-card in-person" onclick="openEventModal(2)">
-          <div class="event-date">July 20–24 · 3:30 – 5:30 PM</div>
+        <div class="event-card in-person" onclick="openEventModal(1)">
+          <div class="event-date">July 28–30 · 2:00 – 5:00 PM</div>
           <div class="event-title">FutureMinds - VEX IQ LEVEL UP BOOTCAMP</div>
-          <div class="event-desc">Build, Code, Drive, Compete. A 5 day training course for students in rising grades 3-7 to train thoroughly for success in the next season.</div>
+          <div class="event-desc">The VEX IQ LEVEL UP is a 3 day training program for students in rising grades 3-7.</div>
           <div class="event-meta">
             <span class="event-platform">📍 In-Person</span>
             <span>Rising Grades 3–7</span>
-            <span class="event-price">TBD</span>
+            <span class="event-price">$60</span>
           </div>
         </div>
       </div>
@@ -824,7 +813,7 @@
   <div id="tab-about" class="tab-panel">
     <div class="about-hero">
       <h2>Meet The Team</h2>
-      <p>We are four young roboticists who have competed in VEX IQ for years and want to share everything we've learned. FutureMinds was created to help the next generation of competitors grow th[...]
+      <p>We are four young roboticists who have competed in VEX IQ for years and want to share everything we've learned. FutureMinds was created to help the next generation of competitors grow th[...]</p>
     </div>
 
     <div class="bios-section">
@@ -834,7 +823,7 @@
         <div class="bio-card">
           <div class="bio-card-top">
             <div class="bio-name">Anshika Aindala</div>
-            <div class="bio-age">13 years old · Rising 9th Grader, AAI</div>
+            <div class="bio-age">14 years old · Rising 9th Grader, AAI</div>
           </div>
           <div class="bio-tags">
             <span class="bio-tag">🏆 World Championship Qualifier x4</span>
@@ -843,7 +832,7 @@
             <span class="bio-tag">🎨 Painting & Crafts</span>
             <span class="bio-tag">📊 FBLA NLC</span>
           </div>
-          <div class="bio-text">Hey! My name is Anshika and I have been in the VEX IQ program for 5 years! My time in robotics has been so fun and I have learned so much. I participated in FBLA a[...]
+          <div class="bio-text">Hey! My name is Anshika and I have been in the VEX IQ program for 5 years! My time in robotics has been so fun and I have learned so much. I participated in FBLA a[...]</div>
         </div>
 
         <div class="bio-card">
@@ -859,7 +848,7 @@
             <span class="bio-tag">🏥 HOSA President</span>
             <span class="bio-tag">📊 FBLA NLC Qualifier</span>
           </div>
-          <div class="bio-text">Hi, my name is Chetana and I have been in the VEX IQ program for one year. My time in robotics has been extremely rewarding — I learned so much about engineering[...]
+          <div class="bio-text">Hi, my name is Chetana and I have been in the VEX IQ program for one year. My time in robotics has been extremely rewarding — I learned so much about engineering[...]</div>
         </div>
 
         <div class="bio-card">
@@ -876,13 +865,13 @@
             <span class="bio-tag">🏐 Volleyball</span>
             <span class="bio-tag">💃 Dance</span>
           </div>
-          <div class="bio-text">My name is Mithra and I have been doing VEX IQ for 2 years and have won many awards including the Teamwork 1st Place, Innovate Award, Design Award, Judges Award, a[...]
+          <div class="bio-text">My name is Mithra and I have been doing VEX IQ for 2 years and have won many awards including the Teamwork 1st Place, Innovate Award, Design Award, Judges Award, a[...]</div>
         </div>
 
         <div class="bio-card">
           <div class="bio-card-top">
             <div class="bio-name">Jeanina Xavier</div>
-            <div class="bio-age">13 years old · Rising 9th Grader, AAI</div>
+            <div class="bio-age">14 years old · Rising 9th Grader, AAI</div>
           </div>
           <div class="bio-tags">
             <span class="bio-tag">🏆 World Championship Qualifier x4</span>
@@ -890,7 +879,7 @@
             <span class="bio-tag">🎵 Guitar & Singing</span>
             <span class="bio-tag">💃 Dance</span>
           </div>
-          <div class="bio-text">Hello! My name is Jeanina and I have been in VEX IQ for 4 years. This program has not just boosted my robotics and STEM skills but helped me become more confident [...]
+          <div class="bio-text">Hello! My name is Jeanina and I have been in VEX IQ for 4 years. This program has not just boosted my robotics and STEM skills but helped me become more confident [...]</div>
         </div>
 
       </div>
@@ -930,7 +919,7 @@
         <a class="form-fallback-btn" href="https://forms.gle/NVaCaPLEb4TzqAnK8" target="_blank">Can't see the form? Click here to open it →</a>
 
         <div class="form-wrap">
-          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe63eZ9q2Z2e6eb4jMFzWAf9Etjbj0b8O7-UlpBflEafPZUpQ/viewform?embedded=true" width="100%" height="1146" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe63eZ9q2Z2e6eb4jMFzWAf9Etjbj0b8O7-UlpBflEafPZUpQ/viewform?embedded=true" width="100%" height="1400" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
         </div>
       </div>
     </div>
@@ -946,31 +935,22 @@
 <script>
   const eventData = [
     {
-      date: "July 15 · 11:00 AM – 12:00 PM",
-      title: "Notebook Workshop",
-      desc: "Dive deep into making a world-qualifying engineering notebook by 4 time world champion qualifiers. Learn how to tailor your notebook to the rubric, and receive a perfect score! Understand how to fill a innovate form, and how to deliver great project management!",
+      date: "July 22 · 11:00 AM – 12:00 PM",
+      title: "Exploring Notebook Strategies",
+      desc: "Dive deep into making a world-qualifying engineering notebook by 4 time world champion qualifiers. Learn how to tailor your notebook to the rubric, and receive a perfect score! Under[...]",
       platform: "💻 Zoom",
       grades: "Rising Grades 3–8",
-      price: "$5",
-      expanded: "Dive deep into making a world-qualifying engineering notebook by 4 time world champion qualifiers. Learn how to tailor your notebook to the rubric, and receive a perfect score! Understand how to fill a innovate form, and how to deliver great project management!"
+      price: "$6",
+      expanded: "Dive deep into making a world-qualifying engineering notebook by 4 time world champion qualifiers. Learn how to tailor your notebook to the rubric, and receive a perfect score! U[...]"
     },
     {
-      date: "July 17 · 11:00 AM – 12:00 PM",
-      title: "Leadership Workshop",
-      desc: "Explore more in becoming a future leader with FutureMinds! Elaborating off of our first Leadership Workshop, learn about leaders duties, public speaking, and project management.",
-      platform: "💻 Zoom",
-      grades: "Rising Grades 5–8",
-      price: "$5",
-      expanded: "Explore more in becoming a future leader with FutureMinds! Elaborating off of our first Leadership Workshop, learn about leaders duties, public speaking, and project management. Learn how to pull in a crowd, and lead any team to victory!"
-    },
-    {
-      date: "July 20–24 · 3:30 – 5:30 PM",
+      date: "July 28–30 · 2:00 – 5:00 PM",
       title: "FutureMinds - VEX IQ LEVEL UP BOOTCAMP",
-      desc: "Build, Code, Drive, Compete. A 5 day training course for students in rising grades 3-7. This boot camp is meant to train students thoroughly to attain success in the next season.",
+      desc: "The VEX IQ LEVEL UP is a 3 day training program for students in rising grades 3-7.",
       platform: "📍 In-Person",
       grades: "Rising Grades 3–7",
-      price: "TBD",
-      expanded: "The VEX IQ LEVEL UP Bootcamp is a 5 day training course for students in rising grades 3-7. This boot camp is meant to train students thoroughly to attain success in the next season and later on. We cover every aspect of VEX IQ Robotics so students will either be prepared for robotics team tryouts in the next season or if they have done robotics before they have many opportunities to advance their skills with VEX IQ World Champion Qualifiers ready to help them advance their skills in Driving, Coding, and Building to the next level. We will be building full drivable robots for the next competition season, covering every aspect necessary in VEX IQ. We will also be practicing driving skills on the robotics field over the course of 5 days."
+      price: "$60",
+      expanded: "The VEX IQ LEVEL UP is a 3 day training program for students in rising grades 3-7. This boot camp is meant to train students thoroughly to attain success in the next season and later on. We cover every aspect of VEX IQ Robotics so students will either be prepared for robotics team tryouts in the next season or if they have done robotics before they have many opportunities to advance their skills with VEX IQ World Champion Qualifiers ready to help them advance their skills in Driving, Coding, and Building to the next level. We will be building mechanisms drivable bases for the next competition season, covering every aspect necessary in VEX IQ. We will also be practicing driving skills on the robotics field over the course of 3 days."
     }
   ];
 
@@ -1001,7 +981,7 @@
 
     const buttons = document.querySelectorAll(".tab-btn");
     buttons.forEach(btn => btn.classList.remove("active"));
-    element.classList.add("active");
+    if (element) element.classList.add("active");
   }
 
   function switchTabByName(tabName) {
@@ -1011,13 +991,16 @@
 
     const buttons = document.querySelectorAll(".tab-btn");
     buttons.forEach(btn => btn.classList.remove("active"));
-    const selector = `.tab-btn:nth-of-type(${tabName === "events" ? "1" : tabName === "about" ? "2" : "3"})`;
-    document.querySelector(selector).classList.add("active");
+    Array.from(buttons).find(btn => btn.textContent.toLowerCase().includes(tabName === "about" ? "about" : tabName === "signup" ? "sign" : "events"))?.classList.add("active");
   }
 
   function switchTabBySelect(select) {
-    switchTabByName(select.value);
+    const tabName = select.value;
+    const panels = document.querySelectorAll(".tab-panel");
+    panels.forEach(panel => panel.classList.remove("active"));
+    document.getElementById(`tab-${tabName}`).classList.add("active");
   }
 </script>
+
 </body>
 </html>
